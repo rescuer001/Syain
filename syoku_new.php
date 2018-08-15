@@ -50,12 +50,11 @@ if (! $result) {
 	exit ( '文字コードを指定できませんでした' );
 }
 //更新したい職位番号からデータの取り出し
-mysql_query("begin") ;
 $sql = "SELECT * FROM syoku_m where syoku_no='";
 $sql = $sql . $_GET ['P1'];
-$sql = $sql . "' for update; ";
+$sql = $sql . "';";
 
-echo $sql;
+
 if ($result = mysql_query ( $sql )) {
     if ($row = mysql_fetch_array ( $result )) {
 	    $S1 = $row ['syoku_no'];
@@ -75,14 +74,13 @@ $gray = "style=\"background-color:#b5b5b5\" ";
 
 // 新規作成時の設定
 if ($_GET ['P2'] == 1) {
-	// 選択済み用変数
-	$sct = "selected";
-	// 新規作成時はグレーアウトしないため初期化
-//	$ronly = null;
-//	$gray = null;
-// 番号の最大値取得
-	$sql = "SELECT MAX(syoku_no) FROM syoku_m;";
-
+    // 選択済み用変数
+    $sct = "selected";
+    // 新規作成時はグレーアウトしないため初期化
+    //	$ronly = null;
+    //	$gray = null;
+    // 番号の最大値取得
+    $sql = "SELECT MAX(syoku_no) FROM syoku_m;";
 
 }
 
@@ -164,11 +162,9 @@ if (isset ( $_POST ["update_or_insert"] )) {
 		$result = mysql_query ( $sql );
 		if ($_POST) {
 			if ($result) {
-			    mysql_query("commit");
-			    header ( "Location: syoku_ichiran.php" );
+               header ( "Location: syoku_ichiran.php" );
 				echo ("<p>情報を作成しました。</p>");
 			} else {
-			    mysql_query("rollback");
 			    echo ("<p>情報の作成に失敗しました。</p>");
 			}
 		}
@@ -191,11 +187,9 @@ if (isset ( $_POST ["update_or_insert"] )) {
 		$sql = $sql . "';";
 		$result = mysql_query ( $sql );
 		if ($result) {
-		    mysql_query("commit");
-	    header ( "Location: syoku_ichiran.php" );
-			echo ("<p>情報を更新しました。</p>");
-		} else {
-		    mysql_query("rollback");
+		    echo ("<p>情報を更新しました。</p>");
+	        header ( "Location: syoku_ichiran.php" );
+			} else {
 		    echo ("<p>情報の更新に失敗しました。</p>");
 
 		}
@@ -211,17 +205,16 @@ if (isset ( $_POST ["update_or_insert"] )) {
 	$sql = $sql . "';";
 	$result = mysql_query ( $sql );
 	if ($result) {
-	    mysql_query("commit");
-		echo ("<p>削除に成功しました。</p>");
+        echo ("<p>削除に成功しました。</p>");
 		header ( "Location: syoku_ichiran.php" );
 	} else {
-	    mysql_query("rollback");
+
 		echo ("<p>情報の削除に失敗しました。</p>");
 	}
 }
 
 
-mysql_query("rollback");
+
 $con = mysql_close ( $con );
 if (! $con) {
 	exit ( 'データベースの接続を閉じられませんでした。' );
@@ -229,7 +222,6 @@ if (! $con) {
 ?>
 
 </font>
-
 <script type ="text/javascript" language="javascript">
 <!--
 function check(){

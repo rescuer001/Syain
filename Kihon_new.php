@@ -58,6 +58,8 @@ if ($result = mysql_query ( $sql )) {
 	    $S20 = $row ['jyutaku_kin'];
 	    $S21 = $row ['taisyoku_kbun'];
 	    $S22 = $row ['taisyoku_day'];
+	    $S23 = $row ['addr1_nm'];
+	    $S24 = $row ['addr2_nm'];
 	}
 }
 
@@ -74,11 +76,17 @@ $gray = "style=\"background-color:#b5b5b5\" ";
 $optionPOST = "<option value=\"$S10\" selected>$S10</option>";
 $optionJIGYO = "<option value=\"$S11\" selected>$S11</option>";
 $optionSYOKUC = "<option value=\"$S12\" selected>$S12</option>";
+$optionSYOKUNM = "<option value=\"$S13\" selected>$S13</option>";
+$optionYAKUNO = "<option value=\"$S15\" selected>$S15</option>";
+$optionWARINO = "<option value=\"$S16\" selected>$S16</option>";
 
 // プルダウン初期化
 $optionPOST = null;
 $optionJIGYO = null;
 $optionSYOKUC = null;
+$optionSYOKUNM = null;
+$optionYAKUNO = null;
+$optionWARINO = null;
 
 // 新規作成時の設定
 if ($_GET ['P2'] == 1) {
@@ -192,10 +200,9 @@ echo '<input type="text" name="kinzoku_nisu" maxlength="40" size="40" value= "' 
 <tr>
 <td align="left">郵便番号</td>
 <td><select name="post_cd">
-			<option value="0000000">0000000</option>
 <?php
 echo $optionPOST;
-$sql = "SELECT post_cd from  addr_m ORDER BY post_cd;";
+$sql = "SELECT post_cd from addr_m ORDER BY post_cd;";
 $res = mysql_query($sql);
 while ($row = mysql_fetch_assoc($res)) {
     echo "<option>{$row['post_cd']}</option>";
@@ -203,19 +210,20 @@ while ($row = mysql_fetch_assoc($res)) {
 ?>
 </select>
 <br></td>
-			<?php 
+<?php 
 				if ($_GET ['P2'] != 1) {
-					echo '<td><input type="text" name="post_cd" size="40" value="' . $S10 . '" ' . $ronly . $gray .  '></td>';
+					echo '<td><input type="text" name="post_cd" size="40" onKeyUp= value="' . $S10 . '" ' . $ronly . $gray .  '>
+<input type="text" name="addr1_nm" size="40" value="' . $S23 .'" '. '><input type="text" name="addr2_nm" size="40" value="' . $S24 .'" '. '></td>';
 				}
-			?>
-		</tr>
+?>
 </tr>
+
 
 <tr>
 <td align="left">事業部名</td>
 <td><select name="jigyo_nm">
 <?php
-echo $optionPOST;
+echo $optionJIGYO;
 $sql = "SELECT jigyo_nm from jigyo_m ORDER BY jigyo_cd;";
 $res = mysql_query($sql);
 while ($row = mysql_fetch_assoc($res)) {
@@ -255,17 +263,23 @@ while ($row = mysql_fetch_assoc($res)) {
 
 <tr>
 <td align="left">職位名</td>
-<td>
+<td><select name="syoku_nm">
 <?php
-echo '<input type="text" pattern="[0-9]*" name="syoku_no" maxlength="40" size="40" value= "' . $S13 .'" '. '>';
-$sql = "SELECT syoku_nm from syoku_m;";
-				$res = mysql_query($sql);						
-					while ($row = mysql_fetch_assoc($res)) {
-						echo "<option>{$row['syoku_nm']}</option>";
-					}
+echo $optionSYOKUNM;
+$sql = "SELECT syoku_nm from syoku_m ORDER BY syoku_nm;";
+$res = mysql_query($sql);
+while ($row = mysql_fetch_assoc($res)) {
+    echo "<option>{$row['syoku_nm']}</option>";
+}
 ?>
-<br>
-</td>
+</select>
+<br></td>
+			<?php 
+				if ($_GET ['P2'] != 1) {
+					echo '<td><input type="text" name="syoku_nm" size="40" value="' . $S13 . '" ' . $ronly . $gray .  '></td>';
+				}
+			?>
+
 </tr>
 
 <tr>
@@ -280,33 +294,44 @@ echo '<input type="text" name="kihon_kin" maxlength="40" size="40" value= "' . $
 
 <tr>
 <td align="left">役職ナンバー</td>
-<td>
+<td><select name="yaku_no">
 <?php
-echo '<input type="text" pattern="[0-9]*" name="yaku_no" maxlength="40" size="40" value= "' . $S15 .'" '. '>';
-
-$sql = "SELECT yaku_no from yaku_m;";
-				$res = mysql_query($sql);						
-					while ($row = mysql_fetch_assoc($res)) {
-						echo "<option>{$row['yaku_no']}</option>";
-					}
+echo $optionYAKUNO;
+$sql = "SELECT yaku_no from yaku_m ORDER BY yaku_no;";
+$res = mysql_query($sql);
+while ($row = mysql_fetch_assoc($res)) {
+    echo "<option>{$row['yaku_no']}</option>";
+}
 ?>
-<br>
-</td>
+</select>
+<br></td>
+			<?php 
+				if ($_GET ['P2'] != 1) {
+					echo '<td><input type="text" name="yaku_no" size="40" value="' . $S15 . '" ' . $ronly . $gray .  '></td>';
+				}
+			?>
+
 </tr>
 
 <tr>
 <td align="left">役割ナンバー</td>
-<td>
+<td><select name="wari_no">
 <?php
-echo '<input type="text" pattern="[0-9]*" name="wari_no" maxlength="40" size="40" value= "' . $S16 .'" '. '>';
-$sql = "SELECT wari_no from wari_m;";
-				$res = mysql_query($sql);						
-					while ($row = mysql_fetch_assoc($res)) {
-						echo "<option>{$row['wari_no']}</option>";
-					}
+echo $optionWARINO;
+$sql = "SELECT wari_no from wari_m ORDER BY wari_no;";
+$res = mysql_query($sql);
+while ($row = mysql_fetch_assoc($res)) {
+    echo "<option>{$row['wari_no']}</option>";
+}
 ?>
-<br>
-</td>
+</select>
+<br></td>
+			<?php 
+				if ($_GET ['P2'] != 1) {
+					echo '<td><input type="text" name="wari_no" size="40" value="' . $S16 . '" ' . $ronly . $gray .  '></td>';
+				}
+			?>
+
 </tr>
 
 <tr>
@@ -384,65 +409,7 @@ if (isset ( $_POST ["update_or_insert"] )) {
             if ($row['wk_num'] == 1) {
                 exit ( "入力された社員番号は使用済みです。");
             }
-            
-            
-            $sql = "SELECT count(*) as wk_num FROM syain_t where jigyo_cd='";
-            $sql = $sql . $_POST ['jigyou_cd'];
-            $sql = $sql . "';";
-            $res = mysql_query ( $sql );
-            $row = mysql_fetch_assoc($res);
-            if ($row['wk_num'] == 1) {
-                exit ( "入力された事業部名は使用済みです。");
-            } 
-            
-            $sql = "SELECT count(*) as wk_num FROM syain_t where syoku_no='";
-            $sql = $sql . $_POST ['syoku_no'];
-            $sql = $sql . "';";
-            $res = mysql_query ( $sql );
-            $row = mysql_fetch_assoc($res);
-            if ($row['wk_num'] == 1) {
-                exit ( "入力された職位コードは使用済みです。");
-            }
-            
-            $sql = "SELECT count(*) as wk_num FROM syain_t where syoku_no='";
-            $sql = $sql . $_POST ['syoku_nm'];
-            $sql = $sql . "';";
-            $res = mysql_query ( $sql );
-            $row = mysql_fetch_assoc($res);
-            if ($row['wk_num'] == 1) {
-                exit ( "入力された職位ナンバーは使用済みです。");
-                
-            }
-                
-            $sql = "SELECT count(*) as wk_num FROM syain_t where yaku_no='";
-            $sql = $sql . $_POST ['yaku_no'];
-            $sql = $sql . "';";
-            $res = mysql_query ( $sql );
-            $row = mysql_fetch_assoc($res);
-            if ($row['wk_num'] == 1) {
-                exit ( "入力された役職ナンバーは使用済みです。");
-                
-            }
-            
-            $sql = "SELECT count(*) as wk_num FROM syain_t where wari_no='";
-            $sql = $sql . $_POST ['wari_no'];
-            $sql = $sql . "';";
-            $res = mysql_query ( $sql );
-            $row = mysql_fetch_assoc($res);
-            if ($row['wk_num'] == 1) {
-                exit ( "入力された役割ナンバーは使用済みです。");
-                
-            }
-            
-            $sql = "SELECT count(*) as wk_num FROM syain_t where wari_no='";
-            $sql = $sql . $_POST ['wari_no'];
-            $sql = $sql . "';";
-            $res = mysql_query ( $sql );
-            $row = mysql_fetch_assoc($res);
-            if ($row['wk_num'] == 1) {
-                exit ( "入力された役割ナンバーは使用済みです。");
-                
-            }
+
                 
 		$sql = "INSERT INTO syain_t(syain_code, name, furigana, birth_day, age, in_day, insei_day, kinzoku_nen, kinzoku_nisu, post_cd, division_cd, syoku_no,syoku_nm, kihon_kin, yaku_no, wari_no, wari_ninzu, kinrou_su, nenkin_su, jyutaku_kin, taisyoku_kbun, taisyoku_day)";
 		$sql = $sql . " VALUES('";

@@ -36,25 +36,48 @@ table tr, table td{
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <body style="margin: 0;">
-<font face="メイリオ">
+<font face="nomal">
 <font size="4">役職テーブル一覧
 <form action="yaku_ichiran.php" method="post" onSubmit="return check()" name="mainForm" >
 </center>
+
 <table  border="1" cellspacing="0" cellpadding="3"
- bordercolor="#000000"  width="500" style="border-collapse: collapse">
+ bordercolor="#000000"  width="100%" style="border-collapse: collapse">
  <Div Align="left">
 <input type="button" value="メニュー" onClick="location.href='index.php'"
-style="WIDTH: 100px; margin-left: 7px; margin-right: 0px;  " ><input type="button" value="新規" onClick="location.href='yaku_new.php?P2=1'"
+style="WIDTH: 100px; margin-left: 0px; margin-right: 0px;  " ><input type="button" value="新規" onClick="location.href='yaku_new.php?P2=1'"
 style="WIDTH: 100px; margin-left: 0px; margin-right: 0px; ">
  </Div>
  </font>
 
- <script>
-//更新
-function koshin(){
-  location.reload();
-}
+<script type="text/javascript" charset="utf8">
+$(document).ready(function() {
+$('#table_id').dataTable();
+});
+
+
+$(function () {
+  searchWord = function(){
+    var searchText = $(this).val(), // 検索ボックスに入力された値
+        targetText;
+
+    $('.target-area li').each(function() {
+      targetText = $(this).text();
+
+      // 検索対象となるリストに入力された文字列が存在するかどうかを判断
+      if (targetText.indexOf(searchText) != -1) {
+        $(this).removeClass('hidden');
+      } else {
+        $(this).addClass('hidden');
+      }
+    });
+  };
+  // searchWordの実行
+  $('#search-text').on('input', searchWord);
+});
 </script>
+
+
 
 <?php
 
@@ -74,14 +97,15 @@ if (!$result) {
 
 
 
-echo  '<div class="x_scroll_box">';
-echo  '<table border="1" cellspacing="0" cellpadding="5"  bordercolor="#000000" width="500" style="border-collapse: collapse" id="table_id" class="display">';
+echo  '<div class="x_scroll_box">';;
+echo  '<table border="1" cellspacing="0" cellpadding="5"  bordercolor="#000000" width="500" style="font-weight:normal border-collapse: collapse"  class="display">';
+
 echo '<thead>';
 echo '<tr align="center">';
 echo '<th nowrap width="5">'.役職NO.'</th>';
-echo '<th nowrap width="10">'.役職名.'</th>';
+echo '<th nowrap width="15">'.役職名.'</th>';
 echo '<th nowrap width="15">'.役職手当.'</th>';
-echo '<th nowrap width="15">'.勤労福祉口数.'</th>';
+echo '<th nowrap width="10">'.勤労福祉口数.'</th>';
 
 
 $sql = "SELECT * FROM yaku_m  ORDER BY yaku_no DESC";
@@ -98,10 +122,10 @@ if ($result) {
         }else{
           echo '<tr style="background-color: #FFFFFF">';
         }
-        echo '<td nowrap width="5" tr style="background-color: #FFFFFF"><a href="yaku_new.php?p1='.$data['yaku_no'].'">'.$data['yaku_no'].'</a></td>';
-        echo '<td nowrap width="10">'.$data['yaku_nm'].'</td>';
-        echo '<td nowrap width="15">'.$data['yaku_kin'].'</td>';
-        echo '<td nowrap width="15">'.$data['kinrou_su'].'</td>';
+        echo '<td nowrap  tr style="background-color: #FFFFFF"><a href="yaku_new.php?p1='.$data['yaku_no'].'">'.$data['yaku_no'].'</a></td>';
+        echo '<td nowrap >'.$data['yaku_nm'].'</td>';
+        echo '<td nowrap >'.$data['yaku_kin'].'</td>';
+        echo '<td nowrap >'.$data['kinrou_su'].'</td>';
         echo '</tr>';
    	}
   echo '</tbody>';
@@ -118,11 +142,6 @@ if (!$con) {
 
 ?>
 
-<script type="text/javascript" charset="utf8">
-$(document).ready(function() {
-$('#table_id').dataTable();
-});
-</script>
 
 </body>
 </html>

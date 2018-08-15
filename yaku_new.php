@@ -24,7 +24,7 @@ title {
 
 </style>
 
-<title>役職詳細16:02</title>
+<title>役職詳細</title>
 </head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <body style="margin: 0;">
@@ -92,16 +92,16 @@ if ($_GET ['P2'] == 1) {
 ?>
 <center><font size="4">役職詳細</font></center>
 
-<form  action=""  name="ichiran"  id="ichiran" method="post" ><button type="button" onClick="location.href='index.php'">メニュー</button><button type="button" onClick="location.href='yaku_ichiran.php'">一覧</button><button type="submit" onclick="return check()" name ="update_or_insert"  <?php  echo $CK; ?>>更新</button><button type="submit" name ="delete" >削除</button>
+<form  action=""  name="ichiran"  id="ichiran" method="post" ><button type="button" onClick="location.href='index.php'" style="WIDTH: 100px; margin-left: 0px; margin-right: 0px;">メニュー</button><button type="button" onClick="location.href='yaku_ichiran.php'"style="WIDTH: 100px; margin-left: 0px; margin-right: 0px;">一覧</button><button type="submit" onclick="return check()"style="WIDTH: 100px; margin-left: 0px; margin-right: 0px;" name ="update_or_insert"  <?php  echo $CK; ?>>更新</button><button type="submit" style="WIDTH: 100px; margin-left: 0px; margin-right: 0px;" name ="delete" >削除</button>
 
-<table border="1" cellspacing="0" cellpadding="3"  bordercolor="#000000	"  width="270" style="border-collapse: collapse">
+<table border="1" cellspacing="0" cellpadding="3"  bordercolor="#000000	"  width="250" style="border-collapse: collapse">
 <tr><td width="100" align="left">役職番号</td>
 <td>
 <?php
 if ($_GET ['P2'] == 1) {
-	echo '<input type="text" name="yaku_no" maxlength="5" size="15" placeholder="数字5桁で入力" value="">';
+	echo '<input type="text" name="yaku_no" maxlength="5" size="5" placeholder="00000" value="">';
 }else{
-	echo '<input type="text" name="yaku_no" maxlength="5" size="15" placeholder="数字5桁で入力" value="' . $S1 . '" ' . $ronly . $gray .  '>';
+	echo '<input type="text" name="yaku_no" maxlength="5" size="5" placeholder="00000" value="' . $S1 . '" ' . $ronly . $gray .  '>';
 }
 ?>
 <br>
@@ -112,7 +112,7 @@ if ($_GET ['P2'] == 1) {
 <td align="left">役職名</td>
 <td>
 <?php
-echo '<input name="yaku_nm" maxlength="10" size="15" value="' . $S2 . '" '  .  '>';
+echo '<input name="yaku_nm" maxlength="10" size="10" value="' . $S2 . '" '  .  '>';
 ?>
 <br>
 </td>
@@ -121,13 +121,13 @@ echo '<input name="yaku_nm" maxlength="10" size="15" value="' . $S2 . '" '  .  '
 <tr>
 <td align="left">役職手当</td>
 <td>
-<input type="text" name="yaku_kin" maxlength="15" size="15"  value="<?php echo $S3; ?>">
+<input type="text" name="yaku_kin" maxlength="5" size="5"  value="<?php echo $S3; ?>" align="right">
 </td>
 </tr>
 <tr>
 <td align="left">勤労福祉口数</td>
 <td>
-<input type="text" name="kinrou_su" maxlength="15" size="15"  value="<?php echo $S4; ?>">
+<input type="text" name="kinrou_su" maxlength="5" size="5"  value="<?php echo $S4; ?>" align="right">
 </select>
 
 </td>
