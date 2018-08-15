@@ -158,6 +158,16 @@ if (isset ( $_POST ["update_or_insert"] )) {
 		 if ($row['wk_num'] == 1) {
 			exit ( "入力された事業部CDは使用済みです。");
 			} 
+			
+	    #updatecheck
+	    $sql = "SELECT count(*) as wk_num FROM jigyo_m where jigyo_no='";		
+		$sql = $sql . $_POST ['jigyo_nm'];
+		$sql = $sql . "';";
+		$res = mysql_query ( $sql );
+		$row = mysql_fetch_assoc($res);
+		 if ($row['wk_num'] == 1) {
+			exit ( "更新しますか？。");
+			} 
 			   			   
 		#sakusei
 		
